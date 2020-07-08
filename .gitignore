@@ -1,6 +1,8 @@
 .vscode
+.python-version
 __pycache__
 venv
+trivia_pj.code-workspace
 
 # OS generated files #
 ######################
@@ -11,3 +13,6 @@ venv
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# helper scripts
+*.sh
