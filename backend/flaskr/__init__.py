@@ -22,17 +22,18 @@ def create_app(test_config=None):
       response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
       response.headers.add('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS')
       return response
-  
-  '''
-  @TODO: Use the after_request decorator to set Access-Control-Allow
-  '''
 
   '''
   @TODO: 
   Create an endpoint to handle GET requests 
   for all available categories.
   '''
-
+  @app.route('/questions')
+  def get_questions(METHODS=['GET']):
+    
+    return jsonify({
+      'success' : True
+    })
 
   '''
   @TODO: 
