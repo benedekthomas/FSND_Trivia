@@ -45,10 +45,10 @@ class TriviaTestCase(unittest.TestCase):
 
             self.assertEqual(res.status_code, 200)
             self.assertEqual(data['success'], True)
-            # self.assertTrue(len(data['questions']))
-            # self.assertTrue(data['total_questions'])
-            # self.assertTrue(data['current_category'])
-            # self.assertTrue(len(data['categories']))
+            self.assertTrue(len(data['questions']))
+            self.assertTrue(data['total_questions'])
+            self.assertTrue(data['current_category'])
+            self.assertTrue(len(data['categories']))
 
     def tearDown(self):
         """Executed after reach test"""
