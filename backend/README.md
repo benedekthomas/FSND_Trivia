@@ -58,7 +58,7 @@ One note before you delve into your tasks: for each endpoint you are expected to
 
 (C) 1. Use Flask-CORS to enable cross-domain requests and set response headers. 
 (C) 2. Create an endpoint to handle GET requests for questions, including pagination (every 10 questions). This endpoint should return a list of questions, number of total questions, current category, categories. 
-3. Create an endpoint to handle GET requests for all available categories. 
+(C) 3. Create an endpoint to handle GET requests for all available categories. 
 4. Create an endpoint to DELETE question using a question ID. 
 5. Create an endpoint to POST a new question, which will require the question and answer text, category, and difficulty score. 
 6. Create a POST endpoint to get questions based on category. 

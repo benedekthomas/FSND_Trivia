@@ -53,8 +53,8 @@ def create_app(test_config=None):
   ten questions per page and pagination at the bottom of the screen for three pages.
   Clicking on the page numbers should update the questions. 
   '''
-  @app.route('/questions')
-  def retrieve_questions(METHODS=['GET']):
+  @app.route('/questions', methods=['GET'])
+  def retrieve_questions():
     selection = Question.query.order_by(Question.id).all()
     categories = [category.format() for category in Category.query.order_by(Category.id).all()]
     
@@ -72,12 +72,33 @@ def create_app(test_config=None):
     })
 
   '''
-  @TODO: 
   Create an endpoint to DELETE question using a question ID. 
 
   TEST: When you click the trash icon next to a question, the question will be removed.
   This removal will persist in the database and when you refresh the page. 
   '''
+  @app.route('/questions/<int:question_id>', methods=['DELETE'])
+  def delete_questions(question_id):
+    question = Question.query.filter_by(id=question_id).one_or_none()
+
+    if question:
+      question.delete()
+      message = 'Question with id ' + str(question_id) + ' was deleted'
+    else:
+      message = 'Question not found'
+      abort(400)
+
+    selection = Question.query.order_by(Question.id).all()
+    current_questions = paginate_questions(request, selection)
+
+    return jsonify({
+      'success' : True,
+      'questions' : current_questions,
+      'message' : message,
+      'total_questions' : len(selection),
+      'deleted' : question_id,
+    })
+
 
   '''
   @TODO: 
@@ -102,7 +123,6 @@ def create_app(test_config=None):
   '''
 
   '''
-  @TODO: 
   Create a GET endpoint to get questions based on category. 
 
   TEST: In the "List" tab / main screen, clicking on one of the 
