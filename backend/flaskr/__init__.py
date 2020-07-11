@@ -82,23 +82,23 @@ def create_app(test_config=None):
   of the questions list in the "List" tab.  
   '''
 
-  # @app.route('/questions', methods=['POST'])
-  # def post_new_question():
-  #   new_question = Question(
-  #     question=request.form.get['question'],
-  #     answer=request.form.get['answer'],
-  #     difficulty=request.form.get['difficulty'],
-  #     category=request.form.get['category']
-  #   )
+  @app.route('/questions', methods=['POST'])
+  def post_new_question():
+    new_question = Question(
+      question=request.form.get['question'],
+      answer=request.form.get['answer'],
+      difficulty=request.form.get['difficulty'],
+      category=request.form.get['category']
+    )
 
-  #   if new_question is None:
-  #     abort(400)
+    if new_question is None:
+      abort(400)
     
-  #   new_question.insert()
+    new_question.insert()
 
-  #   return jsonify({
-  #     'success' : True
-  #   })
+    return jsonify({
+      'success' : True
+    })
 
 
   '''
