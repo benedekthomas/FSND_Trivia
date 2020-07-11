@@ -85,10 +85,10 @@ def create_app(test_config=None):
   @app.route('/questions', methods=['POST'])
   def post_new_question():
     new_question = Question(
-      question=request.form.get['question'],
-      answer=request.form.get['answer'],
-      difficulty=request.form.get['difficulty'],
-      category=request.form.get['category']
+      question=request.form.get('question'),
+      answer=request.form.get('answer'),
+      difficulty=request.form.get('difficulty'),
+      category=request.form.get('category')
     )
 
     if new_question is None:
