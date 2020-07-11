@@ -40,15 +40,29 @@ class TriviaTestCase(unittest.TestCase):
         category_ids = [cat.id for cat in Category.query.order_by(Category.id).all()]
 
         for id in category_ids:
-            res = self.client().get('/categories/' + str(id) + '/questions')
-            data = json.loads(res.data)
+            response = self.client().get('/categories/' + str(id) + '/questions')
+            data = json.loads(response.data)
 
-            self.assertEqual(res.status_code, 200)
+            self.assertEqual(response.status_code, 200)
             self.assertEqual(data['success'], True)
             self.assertTrue(len(data['questions']))
             self.assertTrue(data['total_questions'])
             self.assertTrue(data['current_category'])
             self.assertTrue(len(data['categories']))
+
+    def test_postNewQuestion(self):
+        new_question = {
+            'question' : 'Test question?',
+            'answer' : 'It is a test!',
+            'difficulty' : 1,
+            'category' : 1
+        }
+
+        response = self.client().post('/questions', json = new_question)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
 
     def tearDown(self):
         """Executed after reach test"""

@@ -72,6 +72,36 @@ def create_app(test_config=None):
     })
 
   '''
+  @TODO: 
+  Create an endpoint to POST a new question, 
+  which will require the question and answer text, 
+  category, and difficulty score.
+
+  TEST: When you submit a question on the "Add" tab, 
+  the form will clear and the question will appear at the end of the last page
+  of the questions list in the "List" tab.  
+  '''
+
+  # @app.route('/questions', methods=['POST'])
+  # def post_new_question():
+  #   new_question = Question(
+  #     question=request.form.get['question'],
+  #     answer=request.form.get['answer'],
+  #     difficulty=request.form.get['difficulty'],
+  #     category=request.form.get['category']
+  #   )
+
+  #   if new_question is None:
+  #     abort(400)
+    
+  #   new_question.insert()
+
+  #   return jsonify({
+  #     'success' : True
+  #   })
+
+
+  '''
   Create an endpoint to DELETE question using a question ID. 
 
   TEST: When you click the trash icon next to a question, the question will be removed.
@@ -100,16 +130,7 @@ def create_app(test_config=None):
     })
 
 
-  '''
-  @TODO: 
-  Create an endpoint to POST a new question, 
-  which will require the question and answer text, 
-  category, and difficulty score.
 
-  TEST: When you submit a question on the "Add" tab, 
-  the form will clear and the question will appear at the end of the last page
-  of the questions list in the "List" tab.  
-  '''
 
   '''
   @TODO: 
