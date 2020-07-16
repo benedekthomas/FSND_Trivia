@@ -188,7 +188,6 @@ def create_app(test_config=None):
     })
 
   '''
-  @TODO: 
   Create a POST endpoint to get questions to play the quiz. 
   This endpoint should take category and previous question parameters 
   and return a random questions within the given category, 
@@ -198,12 +197,19 @@ def create_app(test_config=None):
   one question at a time is displayed, the user is allowed to answer
   and shown whether they were correct or not. 
   '''
+  @app.route('/quizzes', methods=['POST'])
+  def retrieve_quiz_questions():
+    return jsonify({
+      'success' : True,
+    })
 
-  '''
-  @TODO: 
-  Create error handlers for all expected errors 
-  including 404 and 422. 
-  '''
+
+
+  # '''
+  # Create error handlers for all expected errors 
+  # including 404 and 422. 
+  # '''
+  
   
   return app
 

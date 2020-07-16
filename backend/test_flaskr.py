@@ -85,6 +85,17 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(len(data['questions']))
         self.assertTrue(data['total_questions'])
 
+    def test_quiz_questions(self):
+        quizParams = {
+            'previous_questions' : '[]',
+            'quizCategory' : 1
+        }
+        response = self.client().post('/quizzes', json = quizParams)
+
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
 
     def tearDown(self):
         """Executed after reach test"""
