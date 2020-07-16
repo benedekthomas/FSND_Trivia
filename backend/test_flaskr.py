@@ -72,6 +72,20 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(len(data['categories']))
 
+    def test_search(self):
+        searchTerm = {
+            'searchTerm' : 'What'
+        }
+        response = self.client().post('/search', json = searchTerm)
+
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(len(data['questions']))
+        self.assertTrue(data['total_questions'])
+
+
     def tearDown(self):
         """Executed after reach test"""
         pass

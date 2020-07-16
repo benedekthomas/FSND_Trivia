@@ -78,7 +78,6 @@ def create_app(test_config=None):
     })
 
   '''
-  @TODO: 
   Create an endpoint to POST a new question, 
   which will require the question and answer text, 
   category, and difficulty score.
@@ -87,14 +86,13 @@ def create_app(test_config=None):
   the form will clear and the question will appear at the end of the last page
   of the questions list in the "List" tab.  
   '''
-
   @app.route('/questions', methods=['POST'])
   def post_new_question():
     new_question = Question(
-      question=request.json.get('question'),
-      answer=request.json.get('answer'),
-      difficulty=request.json.get('difficulty'),
-      category=request.json.get('category')
+      question=request.json.get('question',''),
+      answer=request.json.get('answer',''),
+      difficulty=request.json.get('difficulty',''),
+      category=request.json.get('category','')
     )
 
     if new_question is None:
@@ -136,10 +134,7 @@ def create_app(test_config=None):
     })
 
 
-
-
   '''
-  @TODO: 
   Create a POST endpoint to get questions based on a search term. 
   It should return any questions for whom the search term 
   is a substring of the question. 
@@ -148,6 +143,25 @@ def create_app(test_config=None):
   only question that include that string within their question. 
   Try using the word "title" to start. 
   '''
+  @app.route('/search', methods=['POST'])
+  def retrieve_questions_by_search():
+    searchTerm = request.json.get('searchTerm', '')
+    searchTerm = "%" + searchTerm.lower() + "%"
+
+    selection = Question.query.filter(Question.question.ilike(searchTerm)).all()
+    current_questions = paginate_questions(request, selection)
+
+    if len(current_questions) == 0:
+      abort(404)
+
+    return jsonify({
+      'success' : True,
+      'questions' : current_questions,
+      'total_questions' : len(selection),
+    })
+
+
+
 
   '''
   Create a GET endpoint to get questions based on category. 
