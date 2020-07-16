@@ -199,8 +199,26 @@ def create_app(test_config=None):
   '''
   @app.route('/quizzes', methods=['POST'])
   def retrieve_quiz_questions():
+    category = request.json.get('quiz_category', 0)
+    previous_questions = set(request.json.get('previous_questions', 0))
+
+    # select questions based on category or all for 0
+    if category['type'] == 'click':
+      questions = [question.format() for question in \
+        Question.query.order_by(Question.id).all()]
+    else:
+      questions = [question.format() for question in \
+        Question.query.order_by(Question.id).filter_by(category=(int(category['id'])+1)).all()]
+    
+    # remove previous questions
+    questions = [question for question in questions if question['id'] not in previous_questions]
+    
+    # select random question out of the collection
+    question = questions[random.randint(0, len(questions)-1)]
+
     return jsonify({
       'success' : True,
+      'question' : question
     })
 
 
