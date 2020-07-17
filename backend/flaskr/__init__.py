@@ -214,7 +214,10 @@ def create_app(test_config=None):
     questions = [question for question in questions if question['id'] not in previous_questions]
     
     # select random question out of the collection
-    question = questions[random.randint(0, len(questions)-1)]
+    if len(questions):
+      question = questions[random.randint(0, len(questions)-1)]
+    else:
+      question = ''
 
     return jsonify({
       'success' : True,
