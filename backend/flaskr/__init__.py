@@ -74,7 +74,6 @@ def create_app(test_config=None):
       'questions' : current_questions,
       'total_questions' : len(selection),
       'categories' : categories,
-      'current_category' : None, # ToDo: implemenet category once quiz is done
     })
 
   '''
