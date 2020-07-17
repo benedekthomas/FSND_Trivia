@@ -60,7 +60,7 @@ class QuestionView extends Component {
 
   getByCategory= (id) => {
     $.ajax({
-      url: `/categories/${id}/questions`, //TODO: update request URL
+      url: `/categories/${(parseInt(id)+1)}/questions`, // +1 necessary to connect id to category
       type: "GET",
       success: (result) => {
         this.setState({
