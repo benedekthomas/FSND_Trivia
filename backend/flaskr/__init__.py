@@ -94,10 +94,10 @@ def create_app(test_config=None):
       category=request.json.get('category','')
     )
 
-    if new_question is None:
-      abort(400)
-    
-    new_question.insert()
+    try:
+      new_question.insert()
+    except:
+      abort(500)
 
     return jsonify({
       'success' : True
@@ -115,11 +115,12 @@ def create_app(test_config=None):
     question = Question.query.filter_by(id=question_id).one_or_none()
 
     if question:
-      question.delete()
-      message = 'Question with id ' + str(question_id) + ' was deleted'
+      try:
+        question.delete()
+      except:
+        abort(500)
     else:
-      message = 'Question not found'
-      abort(400)
+      abort(404)
 
     selection = Question.query.order_by(Question.id).all()
     current_questions = paginate_questions(request, selection)
@@ -127,7 +128,6 @@ def create_app(test_config=None):
     return jsonify({
       'success' : True,
       'questions' : current_questions,
-      'message' : message,
       'total_questions' : len(selection),
       'deleted' : question_id,
     })
