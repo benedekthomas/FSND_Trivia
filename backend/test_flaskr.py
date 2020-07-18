@@ -49,7 +49,11 @@ class TriviaTestCase(unittest.TestCase):
             self.assertTrue(data['current_category'])
             self.assertTrue(len(data['categories']))
 
-    def test_postNewQuestion(self):
+    """
+    Tests functional behavior of POST /questions endpoint 
+        -- add new question with right syntax
+    """
+    def test_postNewQuestion_functional(self):
         new_question = {
             'question' : 'Test question?',
             'answer' : 'It is a test!',
@@ -63,6 +67,21 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
 
+    """
+    Tests error handling behavior of POST /questions endpoint 
+        -- add new question with bad syntax
+    """
+    def test_postNewQuestion_abort(self):
+        new_question = {
+        }
+
+        response = self.client().post('/questions', json = new_question)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(data['success'], False)
+
+    
     def test_getCategories(self):
         response = self.client().get('/categories')
         data = json.loads(response.data)
@@ -71,7 +90,10 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(len(data['categories']))
 
-    def test_search(self):
+    """
+    Tests functional behavior of /search endpoint
+    """
+    def test_search_functional(self):
         searchTerm = {
             'searchTerm' : 'What'
         }
@@ -84,10 +106,27 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(len(data['questions']))
         self.assertTrue(data['total_questions'])
 
+    """
+    Tests error handling /search endpoint
+    """
+    def test_search_abort(self):
+        searchTerm = {
+            'searchTerm' : '123456789'
+        }
+        response = self.client().post('/search', json = searchTerm)
+
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['success'], False)
+
     def test_quiz_questions(self):
         quizParams = {
             'previous_questions' : '[]',
-            'quizCategory' : 1
+            'quiz_category' : {
+                'id' : 0,
+                'type' : 'click',
+            }
         }
         response = self.client().post('/quizzes', json = quizParams)
 

@@ -202,7 +202,7 @@ def create_app(test_config=None):
     previous_questions = set(request.json.get('previous_questions', 0))
 
     # select questions based on category or all for 0
-    if category['type'] == 'click':
+    if category['type'] == 'click' or category == 0:
       questions = [question.format() for question in \
         Question.query.order_by(Question.id).all()]
     else:
