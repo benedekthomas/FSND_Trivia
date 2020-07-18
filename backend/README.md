@@ -56,15 +56,15 @@ Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` d
 
 One note before you delve into your tasks: for each endpoint you are expected to define the endpoint and response data. The frontend will be a plentiful resource because it is set up to expect certain endpoints and response data formats already. You should feel free to specify endpoints in your own way; if you do so, make sure to update the frontend or you will get some unexpected behavior. 
 
-(C) 1. Use Flask-CORS to enable cross-domain requests and set response headers. 
-(C) 2. Create an endpoint to handle GET requests for questions, including pagination (every 10 questions). This endpoint should return a list of questions, number of total questions, current category, categories. 
-(C) 3. Create an endpoint to handle GET requests for all available categories. 
-(C) 4. Create an endpoint to DELETE question using a question ID. 
-(C) 5. Create an endpoint to POST a new question, which will require the question and answer text, category, and difficulty score. 
-(C) 6. Create a POST endpoint to get questions based on category. 
-(C) 7. Create a POST endpoint to get questions based on a search term. It should return any questions for whom the search term is a substring of the question. 
-(C) 8. Create a POST endpoint to get questions to play the quiz. This endpoint should take category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions. 
-(C) 9. Create error handlers for all expected errors including 400, 404, 422 and 500. 
+1. Use Flask-CORS to enable cross-domain requests and set response headers. 
+2. Create an endpoint to handle GET requests for questions, including pagination (every 10 questions). This endpoint should return a list of questions, number of total questions, current category, categories. 
+3. Create an endpoint to handle GET requests for all available categories. 
+4. Create an endpoint to DELETE question using a question ID. 
+5. Create an endpoint to POST a new question, which will require the question and answer text, category, and difficulty score. 
+6. Create a POST endpoint to get questions based on category. 
+7. Create a POST endpoint to get questions based on a search term. It should return any questions for whom the search term is a substring of the question. 
+8. Create a POST endpoint to get questions to play the quiz. This endpoint should take category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions. 
+9. Create error handlers for all expected errors including 400, 404, 422 and 500. 
 
 REVIEW_COMMENT
 ```
@@ -78,7 +78,9 @@ Endpoints
 5. DELETE '/questions/<int:question_id>'
 6. POST '/search'
 7. POST '/quizzes'
+```
 
+```
 1. GET '/categories'
     - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
     - Request Arguments: None
@@ -89,7 +91,9 @@ Endpoints
     '4' : "History",
     '5' : "Entertainment",
     '6' : "Sports"}
+```
 
+```
 2. GET '/questions?page=page_nb'
     - Fetches a dictionary of quesitons paginated questions containing id, question, answer, category, difficutly. Total questions and categories are also returned.
     - Request Arguments: 
@@ -143,14 +147,18 @@ Endpoints
     "success": true,
     "total_questions": 18
     }
+```
 
+```
 3. GET '/categories/<int:category_id>/questions'
     - Fetches a dictionary of paginated questions in a specific category containing id, question, answer, category, difficutly. Total questions and categories are also returned.
     - Request arguments: 
         - category_id : int, specifying the category from which the questions are requested
     - Returns: same format as for GET '/questions' endpoint plus
         - category_id : int, specifying the category from which the questions were requested
+```
 
+```
 4. POST '/questions'
     - Inserts a new question with data from a JSON containing question, answer, difficulty and category
     - Request arguments: JSON in the form:
@@ -162,7 +170,9 @@ Endpoints
         }
     - Returns:
         - success : boolean, True if succeeded aborts with 400 otherwise
+```
 
+```
 5. DELETE '/questions/<int:question_id>'
     - Deletes a question specified by question_id
     - Request arguments:
@@ -172,7 +182,9 @@ Endpoints
         - questions, total_questions: same as described at GET '/questions' endpoint
         - deleted : int, id of the question which was successfully deleted
         - message:
+```
 
+```
 6. POST '/search'
     - Fetches questions that match a search criteria in the format described at GET '/questions' endpoint
     - Request arguments: JSON in the form:
@@ -182,7 +194,9 @@ Endpoints
     - Returns:
         - success : boolean, True if succeeded aborts with 404 if no question matches the criteria
         - questions, total_questions: same as described at GET '/questions' endpoint
+```
 
+```
 7. POST '/quizzes'
     - Fetches randomized and unique (in a gameplay session) individual questions to play a quizz. Returns a dictionary containing question, answer, difficulty and category
     - Request arguments: JSON in the form:
