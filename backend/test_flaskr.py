@@ -76,7 +76,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 500)
         self.assertEqual(data['success'], False)
 
-    # Tests for the GET /categories endpoint
+    # Tests for the GET /categories/cat_id/questions endpoint
     # - Funcational test: iterates through all categories and retrieves
     #                   questions in that category.
     # - Error handling test: requests questions for a non-existing category
@@ -104,6 +104,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(data['success'], False)
 
+    # Test for GET /categories endpoint
     def test_getCategories(self):
         response = self.client().get('/categories')
         data = json.loads(response.data)
@@ -112,10 +113,9 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(len(data['categories']))
 
-    """
-    Tests functional behavior of /search endpoint
-    """
-
+    # Tests POST /search endpoint
+    # - Functional test: search for the term 'what' gives guarnteed response
+    # - Error handling test: search for a term which gives no response
     def test_search_functional(self):
         searchTerm = {
             'searchTerm': 'What'
@@ -129,11 +129,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(len(data['questions']))
         self.assertTrue(data['total_questions'])
 
-    """
-    Tests error handling /search endpoint
-    """
-
-    def test_search_abort(self):
+    def test_search_err(self):
         searchTerm = {
             'searchTerm': '123456789'
         }
@@ -144,6 +140,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(data['success'], False)
 
+    # Tests for POST /quizzes endpoint
     def test_quiz_questions(self):
         quizParams = {
             'previous_questions': '[]',
@@ -159,6 +156,21 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['question'])
+
+    def test_quiz_questions_err(self):
+        quizParams = {
+            "previous_questions": "[]",
+            "quiz_category": {
+                "id": "7",
+                "type": "Non-existent",
+            }
+        }
+        response = self.client().post('/quizzes', json=quizParams)
+
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['success'], False)
 
     def tearDown(self):
         """Executed after reach test"""

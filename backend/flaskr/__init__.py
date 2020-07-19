@@ -1,10 +1,12 @@
+from models import setup_db, Question, Category
+import random
+from flask_cors import CORS
 import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
-import random
+from sqlalchemy.exc import SQLAlchemyError
+SQLAlchemyError
 
-from models import setup_db, Question, Category
 
 QUESTIONS_PER_PAGE = 10
 
@@ -102,7 +104,7 @@ def create_app(test_config=None):
 
         try:
             new_question.insert()
-        except:
+        except SQLAlchemyError:
             abort(500)
 
         return jsonify({
@@ -123,7 +125,7 @@ def create_app(test_config=None):
         if question:
             try:
                 question.delete()
-            except:
+            except SQLAlchemyError:
                 abort(500)
         else:
             abort(404)
@@ -212,6 +214,16 @@ def create_app(test_config=None):
         '''
         category = request.json.get('quiz_category', 0)
         previous_questions = set(request.json.get('previous_questions', 0))
+
+        categories = [category.format()
+                      for category in
+                      Category.query.order_by(Category.id).all()]
+        category_ids = set([int(category['id']) for category in categories])
+
+        # check if cat_id is pointing to a valid category
+        # +1 because the react app uses the index number instead of id
+        if (int(category['id'])+1) not in category_ids:
+            abort(400)
 
         # select questions based on category or all for 0
         if category['type'] == 'click' or category == 0:
