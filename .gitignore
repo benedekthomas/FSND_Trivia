@@ -16,3 +16,6 @@ Thumbs.db
 
 # helper scripts
 *.sh
+
+# React modules
+frontend/node_modules/
