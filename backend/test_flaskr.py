@@ -97,7 +97,7 @@ class TriviaTestCase(unittest.TestCase):
             self.assertTrue(data['current_category'])
             self.assertTrue(len(data['categories']))
 
-    def test_getQuestionsByCategory_functional(self):
+    def test_getQuestionsByCategory_err(self):
         response = self.client().get('/categories/7/questions')
         data = json.loads(response.data)
 
@@ -141,6 +141,8 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
 
     # Tests for POST /quizzes endpoint
+    # - Functional test: request quiy questions from all categories
+    # - Error handling test: request quiz questions for non-existent category
     def test_quiz_questions(self):
         quizParams = {
             'previous_questions': '[]',
